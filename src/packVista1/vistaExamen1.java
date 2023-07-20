@@ -59,7 +59,7 @@ public class vistaExamen1 extends JFrame {
 	public vistaExamen1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 559);
-		setLocation(600, 300); // para situar el frame en la mitad de la pantalla para verla mejor.
+		setLocation(600, 300); // para situar el frame en la mitad de la pantalla para verla mejor :
 		controlador = new Controlador1();
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
@@ -119,7 +119,7 @@ public class vistaExamen1 extends JFrame {
 
 		// controlar como se introducen los datos de los jugadores :
 
-		// BOTON AÑADIR :
+		                                                                         // BOTON AÑADIR :
 
 		JButton btnAÑADIR = new JButton("AÑADIR");
 		btnAÑADIR.setBounds(460, 57, 144, 54);
@@ -139,32 +139,32 @@ public class vistaExamen1 extends JFrame {
 					// Generar el nuevo ID automáticamente :
 					int nuevoID = ultimoID + 1;
 
-					// Verificar si el jugador ya existe en la base de datos por nombre dorsal y
-					// altura
+					// Verificar si el jugador ya existe en la base de datos por nombre dorsal y altura
+					
 
 					boolean jugadorExiste = controlador.existeEnBaseDeDatos(nombre, dorsal, altura);
 
 					if (jugadorExiste) {
 						JOptionPane.showMessageDialog(null, "Error, este jugador ya existe en la base de datos");
 					} else {
-						// Crear objeto Jugador1 con los datos ingresados
+						// Crear objeto Jugador1 con los datos ingresados :
 						Jugador1 jugador = new Jugador1(nuevoID, nombre, dorsal, altura);
 
-						// Llamar al método guardarEnBaseDatos() en el controlador
+						// Llamar al método guardarEnBaseDatos() en el controlador :
 						controlador.guardarEnBaseDatos(jugador);
 						JOptionPane.showMessageDialog(null, "Jugador añadido correctamente");
 
-						// Construir el mensaje con los datos del jugador añadido
+						// Construir el mensaje con los datos del jugador añadido :
 						String mensaje = "\n    Nombre  :  " + nombre + "\n      Dorsal  :  " + dorsal + "º"
 								+ "\n      Altura  :  " + altura + "  cm";
 
-						// Mostrar los datos del jugador añadido en el JTextArea
+						// Mostrar los datos del jugador añadido en el JTextArea :
 						consola.setText(mensaje);
 
 					}
 				} catch (NumberFormatException ex) {
-					// Si se produce una excepción al convertir el dorsal o la altura a int o double
-					// respectivamente
+					// Si se produce una excepción al convertir el dorsal o la altura a int o double :
+					
 					JOptionPane.showMessageDialog(null,
 							"Error !! el nombre del jugador es invalido \n o el número del dorsal es inválido \n o la altura del jugador es inválida");
 				} catch (Exception ex) {
@@ -182,7 +182,7 @@ public class vistaExamen1 extends JFrame {
 		btnAÑADIR.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(btnAÑADIR);
 
-		// BOTON ELIMINAR :
+		                                                                                 // BOTON ELIMINAR :
 
 		JButton btnELIMINAR = new JButton("ELIMINAR");
 		btnELIMINAR.setBounds(460, 191, 144, 54);
@@ -190,14 +190,14 @@ public class vistaExamen1 extends JFrame {
 
 		btnELIMINAR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Verificar si los campos necesarios están vacíos
+				// Verificar si los campos necesarios están vacíos .
 				if (ID.getText().isEmpty() || NOMBRE.getText().isEmpty() || DORSAL.getText().isEmpty()
 						|| ALTURA.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
 					return;
 				}
 
-				// Convertir los valores solo si los campos no están vacíos
+				// Convertir los valores solo si los campos no están vacíos :
 				int id, dorsal;
 				double altura;
 				try {
@@ -212,15 +212,15 @@ public class vistaExamen1 extends JFrame {
 				String nombre = NOMBRE.getText();
 				nombre = nombre.toUpperCase();
 
-				// Verificar si el jugador existe en la base de datos antes de eliminarlo
+				// Verificar si el jugador existe en la base de datos antes de eliminarlo :
 				boolean jugadorExiste = controlador.existeEnBaseDeDatos(nombre, dorsal, altura);
 
 				if (jugadorExiste) {
-					// Obtener el ID del jugador existente con esos datos específicos
+					// Obtener el ID del jugador existente con esos datos específicos :
 					int idEnBaseDeDatos = controlador.obtenerIDJugador(nombre, dorsal, altura);
 
 					if (idEnBaseDeDatos == id) {
-						// El jugador existe y el ID coincide, proceder a eliminarlo
+						// El jugador existe y el ID coincide, proceder a eliminarlo :
 						controlador.eliminarDeBaseDatos(id);
 						JOptionPane.showMessageDialog(null, "Jugador eliminado correctamente");
 					} else {
@@ -238,7 +238,7 @@ public class vistaExamen1 extends JFrame {
 		btnELIMINAR.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
 		contentPane.add(btnELIMINAR);
 
-		// BOTON LISTAR :
+		                                                                                // BOTON LISTAR :
 
 		JButton btnLISTAR = new JButton("LISTAR");
 		btnLISTAR.setBounds(460, 326, 144, 54);
@@ -259,8 +259,8 @@ public class vistaExamen1 extends JFrame {
 		consola.setFont(new Font("Ebrima", Font.BOLD | Font.ITALIC, 20));
 		contentPane.add(consola);
 
-		consola.setEditable(false);
-
+		consola.setEditable(false); // asi el usuario no puede modificar la consola 
+           //  escribir un titulo para el JFrame de la lista de jugadores :
 		setTitle(
 				".                                                      BASE DE DATOS JUGADORES                                 ");
 
