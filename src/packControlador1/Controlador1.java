@@ -48,7 +48,7 @@ public class Controlador1 {
 
 			if (conexion != null) {
 				System.out.println("Hay conexión");
-			} else {
+			} else { 
 				System.out.println("No hay conexión");
 			}
 			// Obtener el último ID de la base de datos
@@ -72,9 +72,10 @@ public class Controlador1 {
 			e.printStackTrace();
 			JOptionPane.showInternalMessageDialog(null, "Ha ocurrido un error al guardar el registro nuevo ");
 		}
-	} // EXISTE EN BASE DE DATOS :
+	} 
+	// EXISTE EN BASE DE DATOS :
 
-	public boolean existeEnBaseDeDatos(String nombre, int dorsal, double altura) {
+	public boolean existeEnBaseDeDatos( int id) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			String url = "jdbc:sqlite:C:\\bbdd\\examen.txt";
@@ -87,11 +88,10 @@ public class Controlador1 {
 			}
 
 			PreparedStatement pt = conexion.prepareStatement(
-					"SELECT * FROM JUGADORES WHERE ID = ? OR Nombre = ? AND Dorsal = ? AND Altura = ?");
+					"SELECT * FROM JUGADORES WHERE ID = ?");
 
-			pt.setString(2, nombre);
-			pt.setInt(3, dorsal);
-			pt.setDouble(4, altura);
+			pt.setInt(1, id);
+		
 
 			ResultSet rs = pt.executeQuery();
 
@@ -209,7 +209,7 @@ public class Controlador1 {
 	}
 	// Función para obtener el ID del jugador existente en la base de datos
 
-	public int obtenerIDJugador(String nombre, int dorsal, double altura) {
+	public int obtenerIDJugador(String nombre , int dorsal, double altura) {    
 		int idEnBaseDeDatos = -1; // Valor por defecto en caso de que no se encuentre el jugador
 
 		try {
@@ -238,6 +238,72 @@ public class Controlador1 {
 		}
 
 		return idEnBaseDeDatos;
+	}
+		
+		//...
+
+		public boolean existeEnBaseDeDatosPorID(int id) {
+		    try {
+		        Class.forName("org.sqlite.JDBC");
+		        String url = "jdbc:sqlite:C:\\bbdd\\examen.txt";
+		        Connection conexion = DriverManager.getConnection(url);
+
+		        if (conexion != null) {
+		            System.out.println("Hay conexión");
+		        } else {
+		            System.out.println("No hay conexión");
+		        }
+
+		        PreparedStatement pt = conexion.prepareStatement("SELECT * FROM JUGADORES WHERE ID = ?");
+		        pt.setInt(1, id);
+
+		        ResultSet rs = pt.executeQuery();
+
+		        if (conexion != null) {
+		            conexion.close();
+		        }
+
+		        return rs.next();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        JOptionPane.showInternalMessageDialog(null, " BASE DE DATOS : Ha ocurrido un error");
+		    }
+		    return false;
+		    
+		    
+
+
 
 	}
+		                                // MODIFICAR EN BASE DE DATOS :
+
+		public void ModificarEnBaseDatos(Jugador1 jugador) { 
+			try {
+				Class.forName("org.sqlite.JDBC");
+				String url = "jdbc:sqlite:C:\\bbdd\\examen.txt";
+				Connection conexion = DriverManager.getConnection(url);
+
+				if (conexion != null) {
+					System.out.println("Hay conexión");
+				} else { 
+					System.out.println("No hay conexión");
+				}
+
+				PreparedStatement pt = conexion.prepareStatement("UPDATE JUGADORES SET NOMBRE = ?, DORSAL = ? , ALTURA = ? WHERE ID = ?");
+				
+				pt.setString(1, jugador.getNombre());
+				pt.setInt(2, jugador.getDorsal());
+				pt.setDouble(3, jugador.getAltura());
+				pt.setInt(4, jugador.getId());
+
+				pt.executeUpdate();
+
+				if (conexion != null) {
+					conexion.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				JOptionPane.showInternalMessageDialog(null, "Ha ocurrido un error al guardar el registro nuevo ");
+			}
+		} 
 }
